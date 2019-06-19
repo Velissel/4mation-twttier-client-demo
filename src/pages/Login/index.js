@@ -10,7 +10,7 @@ import {
 
 import { twitter as twitterAPI } from '../../api';
 
-export default () => {
+export default (props) => {
   return (
     <Container>
       <Jumbotron className="text-center m-5">
@@ -22,5 +22,9 @@ export default () => {
 }
 
 function onLoginButtonClick() {
-  twitterAPI.getOAuthRequestToken().then(console.log);
+  return twitterAPI.getOAuthRequestToken().then(({ requestToken: { oauth_token } }) => {
+    if (typeof window !== 'undefined') {
+      window.location.href = `https://api.twitter.com/oauth/authenticate?oauth_token=${oauth_token}`;
+    }
+  });
 }

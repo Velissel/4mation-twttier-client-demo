@@ -1,10 +1,17 @@
-export default (oauth) => {
-  return new Promise((resolve, reject) => {
-    oauth.getOAuthRequestToken((err, oauth_token, oauth_token_secret, results) => {
-      if (err) {
-        return reject(err);
+import { gql } from "apollo-boost";
+
+import APIClient from '../../utils/APIClient';
+
+export default () => {
+  return APIClient.query({
+    query: gql`
+      {
+        requestToken {
+          oauth_token
+          oauth_token_secret
+          oauth_callback_confirmed
+        }
       }
-      resolve({ oauth_token, oauth_token_secret, results });
-    });
-  });
+    `
+  }).then(res => res.data);
 }
