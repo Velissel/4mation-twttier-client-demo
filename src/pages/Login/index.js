@@ -4,27 +4,23 @@ import {
   Jumbotron,
   Row,
   Col,
-  Form
+  Form,
+  Button
 } from 'reactstrap';
 
-import LoginForm from './LoginForm';
-
-const LOGIN_FORM = 'LOGIN_FORM';
+import { twitter as twitterAPI } from '../../api';
 
 export default () => {
   return (
     <Container>
-      <Jumbotron>
-        <Row>
-          <Col><h1>Login</h1></Col>
-          <Col>
-            <LoginForm
-              form={LOGIN_FORM}
-              onSubmit={console.log}
-            />
-          </Col>
-        </Row>
+      <Jumbotron className="text-center m-5">
+        <h1>Login</h1>
+        <Button color="primary" onClick={onLoginButtonClick}>Login With Twitter</Button>
       </Jumbotron>
     </Container>
   );
+}
+
+function onLoginButtonClick() {
+  twitterAPI.getOAuthRequestToken().then(console.log);
 }
