@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 function mapState(state) {
   return {
-    isAuthenticated: !_.isNil(state.user.data)
+    isAuthenticated: !_.isNil(state.user.data.accessToken)
   };
 }
 

@@ -1,5 +1,7 @@
 import getOAuthRequestToken from './getOAuthRequestToken';
+import getOAuthAccessToken from './getOAuthAccessToken';
 
 export default {
-  getOAuthRequestToken: getOAuthRequestToken
+  getOAuthRequestToken,
+  getOAuthAccessToken
 }

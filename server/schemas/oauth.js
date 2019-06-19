@@ -25,9 +25,25 @@ function requestToken(parent, args, context, info) {
   });
 }
 
+function accessToken(parent, args) {
+  return new Promise((resolve, reject) => {
+    oauth.getOAuthAccessToken(args.oauth_token, args.oauth_token_secret, args.oauth_verifier, (error, oauth_token, oauth_token_secret, results) => {
+      if (error) {
+        console.error(error);
+        return reject(error);
+      }
+      resolve({
+        oauth_token,
+        oauth_token_secret
+      });
+    });
+  });
+}
+
 const typeDef = `
   extend type Query {
-    requestToken: TwitterOauthToken
+    requestToken: TwitterOauthToken,
+    accessToken(oauth_verifier: String!, oauth_token: String!, oauth_token_secret: String!): TwitterAccessToken
   }
 
   type TwitterOauthToken {
@@ -35,11 +51,17 @@ const typeDef = `
     oauth_token_secret: String!,
     oauth_callback_confirmed: Boolean!
   }
+
+  type TwitterAccessToken {
+    oauth_token: String!,
+    oauth_token_secret: String!
+  }
 `;
 
 const resolvers = {
   Query: {
-    requestToken
+    requestToken,
+    accessToken
   }
 };
 
