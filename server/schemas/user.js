@@ -14,7 +14,11 @@ function searchUser(parent, args) {
           return reject(err);
         }
         try {
-          resolve(JSON.parse(body));
+          const list = JSON.parse(body).map(item => ({
+            ...item,
+            id: item.id.toString()
+          }));
+          resolve(list);
         } catch(e) {
           reject(e);
         }
@@ -39,9 +43,11 @@ const typeDef = `
   }
 
   type TwitterUser {
-    id: Int!,
+    id: String!,
     name: String,
-    screen_name: String
+    screen_name: String,
+    profile_image_url_https: String,
+    profile_banner_url: String
   }
 `;
 

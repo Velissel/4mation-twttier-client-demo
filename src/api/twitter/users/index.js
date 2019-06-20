@@ -12,8 +12,11 @@ export default {
             credentials: $user,
             params: $params
           ) {
+            id
             name
             screen_name
+            profile_image_url_https
+            profile_banner_url
           }
         }
       `,

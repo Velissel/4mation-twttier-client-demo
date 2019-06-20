@@ -10,7 +10,7 @@ function UserSearchForm(props) {
   return (
     <Form onSubmit={handleSubmit}>
       <Field
-        label="Username"
+        label="Search twitter"
         name="username"
         component={InputGroupText}
         noValidation
