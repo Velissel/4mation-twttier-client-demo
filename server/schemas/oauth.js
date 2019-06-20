@@ -1,14 +1,4 @@
-const { OAuth } = require('oauth');
-
-const oauth = new OAuth(
-  'https://api.twitter.com/oauth/request_token',
-  'https://api.twitter.com/oauth/access_token',
-  'Y5svnpKUEgcyaoRNwo5oeOgcW',
-  'E1Q3eY8vVbSjfZgQgaULvKDc5AEsxEmZ2LSCwPQfUdJumbToxL',
-  '1.0',
-  'http://localhost:3000/twitter_callback',
-  'HMAC-SHA1'
-);
+const oauth = require('../utils/OauthClient');
 
 function requestToken(parent, args, context, info) {
   return new Promise((resolve, reject) => {
@@ -29,7 +19,6 @@ function accessToken(parent, args) {
   return new Promise((resolve, reject) => {
     oauth.getOAuthAccessToken(args.oauth_token, args.oauth_token_secret, args.oauth_verifier, (error, oauth_token, oauth_token_secret, results) => {
       if (error) {
-        console.error(error);
         return reject(error);
       }
       resolve({
