@@ -1,19 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import { FormGroup, Label, Input, FormFeedback, FormText } from 'reactstrap';
 
 function InputGroupText(props) {
-  const { input, meta, label, helpText } = props;
+  const { input, meta, label, helpText, noValidation } = props;
   const showError = meta.touched && meta.error;
 
   return (
     <FormGroup>
       <Label>{label}</Label>
       <Input
-        {...props}
+        {..._.omit(props, 'noValidation')}
         {...input}
-        invalid={meta.touched && meta.invalid}
-        valid={meta.touched && meta.valid}
+        invalid={!noValidation && meta.touched && meta.invalid}
+        valid={!noValidation && meta.touched && meta.valid}
       />
       {showError && <FormFeedback>{meta.error}</FormFeedback>}
       {helpText && <FormText>{helpText}</FormText>}
@@ -39,7 +40,8 @@ InputGroupText.propTypes = {
   className: PropTypes.string,
   cssModule: PropTypes.object,
 
-  label: PropTypes.string
+  label: PropTypes.string,
+  noValidation: PropTypes.bool
 };
 
 export default InputGroupText;

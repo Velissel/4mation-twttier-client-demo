@@ -2,9 +2,6 @@ import React, { useCallback } from 'react';
 import {
   Container,
   Jumbotron,
-  Row,
-  Col,
-  Form,
   Button
 } from 'reactstrap';
 import { useDispatch } from 'react-redux';
@@ -19,7 +16,7 @@ export default (props) => {
     <Container>
       <Jumbotron className="text-center m-5">
         <h1>Login</h1>
-        <Button color="primary" onClick={useCallback(() => onLoginButtonClick(dispatch), [])}>Login With Twitter</Button>
+        <Button color="primary" onClick={useCallback(() => onLoginButtonClick(dispatch), [dispatch])}>Login With Twitter</Button>
       </Jumbotron>
     </Container>
   );
