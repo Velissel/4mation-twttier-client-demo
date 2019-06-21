@@ -6,6 +6,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import TwitterCallback from './pages/TwitterCallback';
+import SearchTwitter from './pages/SearchTwitter';
 import Error404 from './pages/404';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <PrivateRoute path="/">
           <Switch>
             <Route path="/" exact component={Home}/>
+            <Route path="/search-twitter" component={SearchTwitter}/>
             <Route component={Error404}/>
           </Switch>
         </PrivateRoute>
