@@ -1,29 +1,34 @@
-const oauth = require('../utils/OauthClient');
+const { getAuthorizedClient } = require('../utils/OauthClient');
 const qs = require('query-string');
+const _ = require('lodash');
 
 function searchUser(parent, args) {
   const { credentials, params } = args;
 
   return new Promise((resolve, reject) => {
-    oauth.get(
-      `https://api.twitter.com/1.1/users/search.json?${qs.stringify(params)}`,
-      credentials.oauth_token,
-      credentials.oauth_token_secret,
-      (err, body) => {
-        if (err) {
-          return reject(err);
-        }
-        try {
-          const list = JSON.parse(body).map(item => ({
-            ...item,
-            id: item.id.toString()
-          }));
-          resolve(list);
-        } catch(e) {
-          reject(e);
-        }
+    return getAuthorizedClient(credentials).get(`/users/search.json?${qs.stringify(params)}`, (err, body) => {
+      if (err) {
+        return reject(err);
       }
-    );
+      const list = body.map(item => ({
+        ...item,
+        id: item.id.toString()
+      }));
+      resolve(list);
+    });
+  });
+}
+
+function showUser(parent, args) {
+  const { credentials, params } = args;
+
+  return new Promise((resolve, reject) => {
+    return getAuthorizedClient(credentials).get(`/users/show.json?${qs.stringify(params)}`, (err, body) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve(_.pick(body, ['id', 'name', 'screen_name', 'profile_image_url_https', 'profile_banner_url']));
+    });
   });
 }
 
@@ -32,13 +37,23 @@ const typeDef = `
     searchUser(
       credentials: Credentials!,
       params: SearchParams!
-    ): [TwitterUser!]!
+    ): [TwitterUser!]!,
+
+    showUser(
+      credentials: Credentials!, params: ShowUserParams!
+    ): TwitterUser
   }
 
   input SearchParams {
     q: String!,
     page: Int,
     count: Int,
+    include_entities: Boolean
+  }
+
+  input ShowUserParams {
+    user_id: String,
+    screen_name: String,
     include_entities: Boolean
   }
 
@@ -53,7 +68,8 @@ const typeDef = `
 
 const resolvers = {
   Query: {
-    searchUser
+    searchUser,
+    showUser
   }
 };
 

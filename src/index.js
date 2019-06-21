@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import { ApolloProvider } from "react-apollo";
 
+import APIClient from './utils/APIClient';
 import { createStore } from './store';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -13,9 +15,11 @@ const { store, persistor } = createStore();
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <BrowserRouter>
-        <App/>
-      </BrowserRouter>
+      <ApolloProvider client={APIClient}>
+        <BrowserRouter>
+          <App/>
+        </BrowserRouter>
+      </ApolloProvider>
     </PersistGate>
   </Provider>,
   document.getElementById('root')

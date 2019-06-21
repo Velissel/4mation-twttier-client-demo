@@ -11,3 +11,26 @@ const oauth = new OAuth(
 );
 
 module.exports = oauth;
+module.exports.getAuthorizedClient = credentials => {
+  const { oauth_token, oauth_token_secret } = credentials;
+  return {
+    get(url, callback) {
+      return oauth.get(
+        `https://api.twitter.com/1.1/${url}`,
+        oauth_token,
+        oauth_token_secret,
+        (err, body) => {
+          try {
+            if (err) {
+              throw err;
+            }
+            body = JSON.parse(body);
+            callback(err, body);
+          } catch(e) {
+            callback(e, body);
+          }
+        }
+      );
+    }
+  };
+}

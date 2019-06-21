@@ -3,6 +3,7 @@ const _ = require('lodash');
 
 const oauth = require('./oauth');
 const user = require('./user');
+const statuses = require('./statuses');
 
 const Query = `
   type Query {
@@ -20,11 +21,13 @@ module.exports = makeExecutableSchema({
   typeDefs: [
     Query,
     oauth.typeDef,
-    user.typeDef
+    user.typeDef,
+    statuses.typeDef
   ],
   resolvers: _.merge(
     resolvers,
     oauth.resolvers,
-    user.resolvers
+    user.resolvers,
+    statuses.resolvers
   )
 });
