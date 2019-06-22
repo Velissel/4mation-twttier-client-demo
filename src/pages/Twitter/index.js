@@ -1,20 +1,14 @@
 import React from 'react';
 import {
   Container,
-  Badge,
-  ListGroup,
-  ListGroupItem
+  Badge
 } from 'reactstrap';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
 import { Query } from "react-apollo";
 import { gql } from "apollo-boost";
-import moment from 'moment';
 
-import constants from '../../constants';
 import TweetTimeline from '../../components/TweetTimeline';
-
-const { DATE_TIME_FORMAT, TWITTER_DATE_TIME_FORMAT } = constants;
 
 const query = gql`
   query(
