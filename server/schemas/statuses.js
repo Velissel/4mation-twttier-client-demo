@@ -14,9 +14,39 @@ function loadUserTimeline(parent, args) {
   });
 }
 
+function loadHomeTimeline(parent, args) {
+  const { credentials, params } = args;
+  return new Promise((resolve, reject) => {
+    return getAuthorizedClient(credentials).get(`/statuses/home_timeline.json?${qs.stringify(params)}`, (err, body) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve(body);
+    });
+  });
+}
+
+function updateStatus(parent, args) {
+  const { credentials, payload } = args;
+}
+
 const typeDef = `
   extend type Query {
-    userTimeline(credentials: Credentials!, params: UserTimelineSearchParams!): [Tweet!]!
+    userTimeline(credentials: Credentials!, params: UserTimelineSearchParams!): [Tweet!]!,
+    homeTimeline(credentials: Credentials!, params: HomeTimelineSearchParams!): [Tweet!]!,
+  }
+
+  extend type Mutation {
+    updateStatus(credentials: Credentials!, payload: StatusUpdatePayload!): Tweet
+  }
+
+  input HomeTimelineSearchParams {
+    since_id: String,
+    count: Int,
+    max_id: String,
+    trim_user: Boolean,
+    exclude_replies: Boolean,
+    include_rts: Boolean
   }
 
   input UserTimelineSearchParams {
@@ -30,6 +60,24 @@ const typeDef = `
     include_rts: Boolean
   }
 
+  input StatusUpdatePayload {
+    status: String!,
+    in_reply_to_status_id: String,
+    auto_populate_reply_metadata: Boolean,
+    exclude_reply_user_ids: String,
+    attachment_url: String,
+    media_ids: String,
+    possibly_sensitive: Boolean,
+    lat: Float,
+    long: Float,
+    place_id: String,
+    display_coordinates: Boolean,
+    trim_user: Boolean,
+    enable_dmcommands: Boolean,
+    fail_dmcommands: Boolean,
+    card_uri: String
+  }
+
   type Tweet {
     id: String!,
     text: String!,
@@ -39,7 +87,11 @@ const typeDef = `
 
 const resolvers = {
   Query: {
-    userTimeline: loadUserTimeline
+    userTimeline: loadUserTimeline,
+    homeTimeline: loadHomeTimeline
+  },
+  Mutation: {
+    updateStatus
   }
 };
 

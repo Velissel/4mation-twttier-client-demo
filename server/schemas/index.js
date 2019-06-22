@@ -10,6 +10,10 @@ const Query = `
     _empty: String
   }
 
+  type Mutation {
+    _empty: String
+  }
+
   input Credentials {
     oauth_token: String!
     oauth_token_secret: String!

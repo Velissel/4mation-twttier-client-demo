@@ -31,6 +31,19 @@ module.exports.getAuthorizedClient = credentials => {
           }
         }
       );
+    },
+    post(url, payload, callback) {
+      return oauth.post(url, oauth_token, oauth_token_secret, payload, (err, body) => {
+        try {
+          if (err) {
+            throw err;
+          }
+          body = JSON.parse(body);
+          callback(err, body);
+        } catch(e) {
+          callback(e, body);
+        }
+      });
     }
   };
 }
