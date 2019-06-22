@@ -10,7 +10,9 @@ import { useSelector } from 'react-redux';
 import { Query } from "react-apollo";
 import { gql } from "apollo-boost";
 import moment from 'moment';
+
 import constants from '../../constants';
+import TweetTimeline from '../../components/TweetTimeline';
 
 const { DATE_TIME_FORMAT, TWITTER_DATE_TIME_FORMAT } = constants;
 
@@ -38,22 +40,6 @@ const query = gql`
   }
 `;
 
-function renderTimeline(timeline, err) {
-  if (timeline.length === 0 || err) {
-    return <div className="text-center"><Badge>No Tweet Found!</Badge></div>;
-  }
-  return (
-    <ListGroup>{timeline.map(line => {
-      return (
-        <ListGroupItem key={line.id}>
-          <p dangerouslySetInnerHTML={{__html: line.text}}/>
-          <p className="small text-black-50">Created At: {moment(line.created_at, TWITTER_DATE_TIME_FORMAT).format(DATE_TIME_FORMAT)}</p>
-        </ListGroupItem>
-      );
-    })}</ListGroup>
-  );
-}
-
 export default props => {
   const twiiterId = _.get(props.match, 'params.id');
   const user = useSelector(state => state.user.data);
@@ -71,7 +57,7 @@ export default props => {
             <div>
               <h1 className="text-center">{twitter.name}</h1>
               <h6 className="text-center">Latest Tweets</h6>
-              {renderTimeline(timeline, error)}
+              <TweetTimeline timeline={timeline} err={error}/>
             </div>
           )}
         </Container>
