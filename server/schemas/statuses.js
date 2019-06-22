@@ -28,16 +28,24 @@ function loadHomeTimeline(parent, args) {
 
 function updateStatus(parent, args) {
   const { credentials, payload } = args;
+  return new Promise((resolve, reject) => {
+    return getAuthorizedClient(credentials).post('/statuses/update.json', payload, (err, body) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve(body);
+    });
+  });
 }
 
 const typeDef = `
   extend type Query {
     userTimeline(credentials: Credentials!, params: UserTimelineSearchParams!): [Tweet!]!,
-    homeTimeline(credentials: Credentials!, params: HomeTimelineSearchParams!): [Tweet!]!,
+    homeTimeline(credentials: Credentials!, params: HomeTimelineSearchParams): [Tweet!]!,
   }
 
   extend type Mutation {
-    updateStatus(credentials: Credentials!, payload: StatusUpdatePayload!): Tweet
+    updateStatus(credentials: Credentials!, payload: StatusUpdatePayload!): Tweet!
   }
 
   input HomeTimelineSearchParams {

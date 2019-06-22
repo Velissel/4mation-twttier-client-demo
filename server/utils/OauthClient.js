@@ -33,7 +33,7 @@ module.exports.getAuthorizedClient = credentials => {
       );
     },
     post(url, payload, callback) {
-      return oauth.post(url, oauth_token, oauth_token_secret, payload, (err, body) => {
+      return oauth.post(`https://api.twitter.com/1.1/${url}`, oauth_token, oauth_token_secret, payload, "application/x-www-form-urlencoded", (err, body) => {
         try {
           if (err) {
             throw err;
