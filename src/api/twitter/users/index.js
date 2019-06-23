@@ -29,27 +29,5 @@ export default {
         user: getAccessToken(user)
       }
     }).then(res => res.data);
-  },
-  show(user, params) {
-    return APIClient.query({
-      query: gql`
-        query($user: Credentials!, $params: ShowUserParams!) {
-          showUser(
-            credentials: $user,
-            params: $params
-          ) {
-            id
-            name
-            screen_name
-            profile_image_url_https
-            profile_banner_url
-          }
-        }
-      `,
-      variables: {
-        params,
-        user: getAccessToken(user)
-      }
-    }).then(res => res.data);
   }
 }
