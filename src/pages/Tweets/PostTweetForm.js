@@ -9,7 +9,6 @@ import InputGroupText from '../../components/InputGroupText';
 
 function PostTweetForm(props) {
   const { handleSubmit, invalid } = props;
-  console.log(props);
   return (
     <Form onSubmit={handleSubmit} className="mb-3">
       <Field
