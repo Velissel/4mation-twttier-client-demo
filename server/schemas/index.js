@@ -4,6 +4,8 @@ const _ = require('lodash');
 const oauth = require('./oauth');
 const user = require('./user');
 const statuses = require('./statuses');
+const search = require('./search');
+const favorites = require('./favorites');
 
 const Query = `
   type Query {
@@ -18,6 +20,13 @@ const Query = `
     oauth_token: String!
     oauth_token_secret: String!
   }
+
+  type Tweet {
+    id: String!,
+    text: String!,
+    created_at: String!,
+    favorite_count: Int!
+  }
 `;
 const resolvers = {};
 
@@ -26,12 +35,16 @@ module.exports = makeExecutableSchema({
     Query,
     oauth.typeDef,
     user.typeDef,
-    statuses.typeDef
+    statuses.typeDef,
+    search.typeDef,
+    favorites.typeDef
   ],
   resolvers: _.merge(
     resolvers,
     oauth.resolvers,
     user.resolvers,
-    statuses.resolvers
+    statuses.resolvers,
+    search.resolvers,
+    favorites.resolvers
   )
 });

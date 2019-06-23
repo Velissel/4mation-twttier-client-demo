@@ -85,12 +85,6 @@ const typeDef = `
     fail_dmcommands: Boolean,
     card_uri: String
   }
-
-  type Tweet {
-    id: String!,
-    text: String!,
-    created_at: String!
-  }
 `;
 
 const resolvers = {
