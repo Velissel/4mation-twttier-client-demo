@@ -1,12 +1,19 @@
 const { OAuth } = require('oauth');
 
+const TWITTER_COMSUMER_KEY = process.env.TWITTER_COMSUMER_KEY;
+const TWITTER_COMSUMER_SECRET = process.env.TWITTER_COMSUMER_SECRET;
+const TWITTER_CALLBACK_URL = process.env.TWITTER_CALLBACK_URL || 'http://localhost:3000/twitter_callback';
+
 const oauth = new OAuth(
   'https://api.twitter.com/oauth/request_token',
   'https://api.twitter.com/oauth/access_token',
-  'Y5svnpKUEgcyaoRNwo5oeOgcW',
-  'E1Q3eY8vVbSjfZgQgaULvKDc5AEsxEmZ2LSCwPQfUdJumbToxL',
+  // 'Y5svnpKUEgcyaoRNwo5oeOgcW',
+  TWITTER_COMSUMER_KEY,
+  // 'E1Q3eY8vVbSjfZgQgaULvKDc5AEsxEmZ2LSCwPQfUdJumbToxL',
+  TWITTER_COMSUMER_SECRET,
   '1.0',
-  'http://localhost:3000/twitter_callback',
+  // 'http://localhost:3000/twitter_callback',
+  TWITTER_CALLBACK_URL,
   'HMAC-SHA1'
 );
 
