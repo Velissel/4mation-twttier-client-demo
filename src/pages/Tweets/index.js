@@ -17,6 +17,9 @@ const LOAD_HOME_TIMELINE = gql`
       id,
       text,
       created_at
+      favorite_count,
+      id_str,
+      favorited
     }
   }
 `;
@@ -26,7 +29,10 @@ const POST_TWEET = gql`
     updateStatus(credentials: $user, payload: $payload) {
       id,
       text,
-      created_at
+      created_at,
+      favorite_count,
+      id_str,
+      favorited
     }
   }
 `;

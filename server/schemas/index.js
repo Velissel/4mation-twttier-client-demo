@@ -23,9 +23,11 @@ const Query = `
 
   type Tweet {
     id: String!,
+    id_str: String!,
     text: String!,
     created_at: String!,
-    favorite_count: Int!
+    favorite_count: Int!,
+    favorited: Boolean!
   }
 `;
 const resolvers = {};

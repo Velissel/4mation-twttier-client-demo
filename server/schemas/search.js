@@ -10,7 +10,7 @@ function searchTweets(parent, args) {
       if (err) {
         return reject(err);
       }
-      resolve(body);
+      resolve(body.statuses);
     });
   });
 }

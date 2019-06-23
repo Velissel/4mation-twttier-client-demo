@@ -13,7 +13,7 @@ export default () => {
       <ListGroup className="text-center">
         <ListGroupItem><Link to="/search-twitter">Get tweet for a particular user</Link></ListGroupItem>
         <ListGroupItem><Link to="/post-tweet">Post a tweet</Link></ListGroupItem>
-        <ListGroupItem><Link to="/search-and-like-tweet">Search and like a tweet by keyword</Link></ListGroupItem>
+        <ListGroupItem><Link to="/search-tweets">Search and like a tweet by keyword</Link></ListGroupItem>
       </ListGroup>
     </Container>
   );

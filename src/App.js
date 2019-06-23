@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import TwitterCallback from './pages/TwitterCallback';
 import SearchTwitter from './pages/SearchTwitter';
+import SearchTweets from './pages/SearchTweets';
 import Twitter from './pages/Twitter';
 import Tweets from './pages/Tweets';
 import Error404 from './pages/404';
@@ -21,8 +22,9 @@ function App() {
           <Switch>
             <Route path="/" exact component={Home}/>
             <Route path="/search-twitter" component={SearchTwitter}/>
-            <Route path="/twitters/:id" component={Twitter}/>
             <Route path="/post-tweet" component={Tweets}/>
+            <Route path="/search-tweets" component={SearchTweets}/>
+            <Route path="/twitters/:id" component={Twitter}/>
             <Route component={Error404}/>
           </Switch>
         </PrivateRoute>

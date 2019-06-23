@@ -3,10 +3,10 @@ const qs = require('query-string');
 const _ = require('lodash');
 
 function createFavorites(parent, args) {
-  const { credentials, params } = args;
+  const { credentials, payload } = args;
 
   return new Promise((resolve, reject) => {
-    return getAuthorizedClient(credentials).post(`/favorites/create.json`, params, (err, body) => {
+    return getAuthorizedClient(credentials).post(`/favorites/create.json`, payload, (err, body) => {
       if (err) {
         return reject(err);
       }
@@ -16,8 +16,8 @@ function createFavorites(parent, args) {
 }
 
 const typeDef = `
-  extend type Query {
-    createFavorites(credentials: Credentials!, params: CreateFavoritesParams!): Tweet
+  extend type Mutation {
+    createFavorites(credentials: Credentials!, payload: CreateFavoritesParams!): Tweet
   }
 
   input CreateFavoritesParams {
@@ -27,7 +27,7 @@ const typeDef = `
 `;
 
 const resolvers = {
-  Query: {
+  Mutation: {
     createFavorites
   }
 };

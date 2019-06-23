@@ -47,6 +47,7 @@ export default () => {
       <h1 className="text-center">Search Twitter</h1>
       <TwitterSearchForm
         form={TWITTER_SEARCH_FORM}
+        onSubmit={_.noop}
         onChange={onSearchFormChange}
       />
       {loading && <div className="text-center"><Badge color="primary">Loading...</Badge></div>}

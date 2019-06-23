@@ -30,6 +30,9 @@ const query = gql`
       id
       text
       created_at
+      favorite_count
+      id_str
+      favorited
     }
   }
 `;
